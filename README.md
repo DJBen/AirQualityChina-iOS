@@ -1,4 +1,4 @@
-# PM25-iOS
+# PM25-iOS [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 这是一个 pm25.in 的 wrapper 框架。该框架提供了 Swift 2.0 环境下查询中国城市空气指数的 API。
 
@@ -72,7 +72,7 @@ Xcode 7 beta 5, Swift 2.0.
 
 This project also contains a sample app for you to play with.
 
-![Screenshot](https://raw.githubusercontent.com/DJBen/PM25-iOS/master/Images/PM25Screen.png?token=AB-3vczCW4q1bkP8M2svBJPSvy-XFl9-ks5V1msZwA%3D%3D)
+![Screenshot](https://raw.githubusercontent.com/DJBen/PM25-iOS/master/Images/PM25Screen.png)
 
 ## 贡献 Contributions
 

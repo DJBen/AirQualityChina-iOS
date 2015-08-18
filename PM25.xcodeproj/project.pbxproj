@@ -27,6 +27,7 @@
 		309B85BC1B61A51B005B2204 /* PM25Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309B85BB1B61A51B005B2204 /* PM25Manager.swift */; };
 		309B85BE1B62AB2A005B2204 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309B85BD1B62AB2A005B2204 /* Station.swift */; };
 		30C9B1961B75207800598B20 /* CityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C9B1951B75207800598B20 /* CityTableViewController.swift */; };
+		F42851681B839E6500706671 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F42851651B839E6500706671 /* Localizable.strings */; };
 		F4C244921B798E8D0055980C /* CityQueryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C244911B798E8D0055980C /* CityQueryTableViewController.swift */; };
 		F4C244941B7A03F30055980C /* QueryResultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C244931B7A03F30055980C /* QueryResultTableViewController.swift */; };
 		F4C244961B7A06240055980C /* PM25TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C244951B7A06240055980C /* PM25TableViewController.swift */; };
@@ -76,6 +77,8 @@
 		309B85BB1B61A51B005B2204 /* PM25Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PM25Manager.swift; sourceTree = "<group>"; };
 		309B85BD1B62AB2A005B2204 /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		30C9B1951B75207800598B20 /* CityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewController.swift; sourceTree = "<group>"; };
+		F42851661B839E6500706671 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F42851671B839E6500706671 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		F4C244911B798E8D0055980C /* CityQueryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CityQueryTableViewController.swift; path = PM25Demo/CityQueryTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		F4C244931B7A03F30055980C /* QueryResultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryResultTableViewController.swift; sourceTree = "<group>"; };
 		F4C244951B7A06240055980C /* PM25TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PM25TableViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +172,7 @@
 				307F6B7A1B66A15B00F73AC7 /* Query.swift */,
 				303CE86C1B719A740006B944 /* DataSample.swift */,
 				303CE86A1B7199540006B944 /* Result.swift */,
+				F42851641B839E6500706671 /* Localization */,
 			);
 			path = PM25;
 			sourceTree = "<group>";
@@ -181,6 +185,14 @@
 				309B85B21B61A4FA005B2204 /* Info.plist */,
 			);
 			path = PM25Tests;
+			sourceTree = "<group>";
+		};
+		F42851641B839E6500706671 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				F42851651B839E6500706671 /* Localizable.strings */,
+			);
+			path = Localization;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,6 +291,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 309B85971B61A4FA005B2204;
 			productRefGroup = 309B85A21B61A4FA005B2204 /* Products */;
@@ -307,6 +320,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F42851681B839E6500706671 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +404,15 @@
 				303CE8621B71771F0006B944 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		F42851651B839E6500706671 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F42851661B839E6500706671 /* en */,
+				F42851671B839E6500706671 /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

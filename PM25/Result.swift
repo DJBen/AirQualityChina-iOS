@@ -14,6 +14,10 @@ public class Result: NSObject {
     
     public let query: Query
     
+    public var averageSample: DataSample? {
+        return samples?.filter { $0.isAverageSample }.first
+    }
+    
     // Warning: this method will throw EXC_BAD_ACCESS error, and I don't know why
     convenience init(query: Query, data: NSData) throws {
         if let dict = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? NSObject {

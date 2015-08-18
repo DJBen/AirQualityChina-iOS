@@ -27,7 +27,7 @@ public class DataSample: NSObject {
     public internal(set) var O3_8h: AirQualityParameter?
     public internal(set) var PM10: AirQualityParameter?
     public internal(set) var PM25: AirQualityParameter?
-    public internal(set) var AQI: Double?
+    public internal(set) var AQI: Int?
     public internal(set) var primaryPollutant: PrimaryPollutant?
     public internal(set) var airQuality: AirQualityRating?
     
@@ -53,8 +53,9 @@ public class DataSample: NSObject {
             "O3_8h": O3_8h]
         
         let airQualityItem = airQuality != nil ? ["\(airQuality!)"] : []
+        let primaryPollutantItem = primaryPollutant != nil ? ["\(primaryPollutant!)"] : []
         
-        return ", ".join(airQualityItem + properties.filter { (_, value) -> Bool in
+        return ", ".join(airQualityItem + primaryPollutantItem + properties.filter { (_, value) -> Bool in
             return value != nil
         }.map { (key, value) -> String in
             if let param = value as? AirQualityParameter {
@@ -152,7 +153,7 @@ public class DataSample: NSObject {
             O3 = parseDict(dict: dictionary, field: field)
             O3_8h = parseDict(dict: dictionary, field: "\(field)_8h")
         case .CityAQI(_):
-            AQI = (dictionary["aqi"] as! Double)
+            AQI = (dictionary["aqi"] as! Int)
         case .CityDetails(_), .StationDetails(_), .AllCityDetails, .AllCityRanking:
             PM10 = parseDict(dict: dictionary, field: "pm10")
             PM25 = parseDict(dict: dictionary, field: "pm2_5")
@@ -161,7 +162,7 @@ public class DataSample: NSObject {
             CO = parseDict(dict: dictionary, field: "co")
             O3 = parseDict(dict: dictionary, field: "o3")
             O3_8h = parseDict(dict: dictionary, field: "o3_8h")
-            AQI = (dictionary["aqi"] as! Double)
+            AQI = (dictionary["aqi"] as! Int)
         default:
             break
         }

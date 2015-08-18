@@ -6,7 +6,7 @@
 //  Copyright © 2015 DJ.Ben. All rights reserved.
 //
 
-public struct PrimaryPollutant: OptionSetType {
+public struct PrimaryPollutant: OptionSetType, CustomStringConvertible {
     public let rawValue: Int
     
     public static let PM2_5 = PrimaryPollutant(rawValue: 1)
@@ -16,6 +16,45 @@ public struct PrimaryPollutant: OptionSetType {
     public static let NO2 = PrimaryPollutant(rawValue: 1 << 4)
     public static let CO = PrimaryPollutant(rawValue: 1 << 5)
     public static let O3_8h = PrimaryPollutant(rawValue: 1 << 6)
+    
+    public var description: String {
+        let items = [PrimaryPollutant.PM2_5, PrimaryPollutant.PM10, PrimaryPollutant.SO2, PrimaryPollutant.O3, PrimaryPollutant.O3_8h, PrimaryPollutant.NO2, PrimaryPollutant.CO]
+        let separator = pm25_localizedString(", ", comment: "Primary pollutants separator")
+        var pollutants = items.flatMap { (item) -> [String] in
+            let key: String?
+            if self.intersect(item) != PrimaryPollutant() {
+                switch item {
+                case PrimaryPollutant.PM2_5:
+                    key = "PM2_5"
+                case PrimaryPollutant.PM10:
+                    key = "PM10"
+                case PrimaryPollutant.SO2:
+                    key = "SO2"
+                case PrimaryPollutant.NO2:
+                    key = "NO2"
+                case PrimaryPollutant.O3:
+                    key = "O3"
+                case PrimaryPollutant.O3_8h:
+                    key = "O3_8h"
+                case PrimaryPollutant.CO:
+                    key = "CO"
+                default:
+                    key = nil
+                }
+            } else {
+                key = nil
+            }
+            if key != nil {
+                return [pm25_localizedString(key!, comment: "Primary pollutants")]
+            } else {
+                return []
+            }
+        }
+        if pollutants.isEmpty {
+            pollutants += [pm25_localizedString("None", comment: "Primary pollutants")]
+        }
+        return separator.join(pollutants)
+    }
     
     public init(rawValue: Int) {
         self.rawValue = rawValue
@@ -62,20 +101,22 @@ public enum AirQualityRating: CustomStringConvertible {
     case SeverelyPolluted
     
     public var description: String {
+        let key: String
         switch self {
         case .Great:
-            return "Great"
+            key = "Great"
         case .Okay:
-            return "Okay"
+            key = "Okay"
         case .LightlyPolluted:
-            return "Lightly polluted"
+            key = "Lightly polluted"
         case .ModeratelyPolluted:
-            return "Moderately polluted"
+            key = "Moderately polluted"
         case .HeavilyPolluted:
-            return "Heavily Polluted"
+            key = "Heavily Polluted"
         case .SeverelyPolluted:
-            return "Severely polluted"
+            key = "Severely polluted"
         }
+        return pm25_localizedString(key, comment: "The description of air quality rating")
     }
     
     public static func ratingFromAPIObject(APIObject object: AnyObject?) -> AirQualityRating? {

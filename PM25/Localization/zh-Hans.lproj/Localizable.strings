@@ -1,0 +1,28 @@
+/* 
+  Localizable.strings
+  PM25
+
+  Created by Sihao Lu on 8/19/15.
+  Copyright © 2015 DJ.Ben. All rights reserved.
+*/
+
+/* Air quality ratings */
+
+"Great" = "优";
+"Okay" = "良";
+"Lightly polluted" = "轻度污染";
+"Moderately polluted" = "中度污染";
+"Heavily Polluted" = "重度污染";
+"Severely polluted" = "严重污染";
+
+/* Primary pollutants */
+
+"PM2_5" = "细颗粒物(PM2.5)";
+"PM10" = "颗粒物(PM10)";
+"SO2" = "二氧化硫";
+"NO2" = "二氧化氮";
+"CO" = "一氧化碳";
+"O3" = "臭氧";
+"O3_8h" = "臭氧8小时";
+"None" = "无";
+", " = "，";

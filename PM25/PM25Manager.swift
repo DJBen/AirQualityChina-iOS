@@ -35,3 +35,30 @@ public class PM25Manager: NSObject {
     }
 }
 
+public func pm25_localizedString(key: String, comment: String) -> String {
+    let bundle = NSBundle(forClass: PM25Manager.self)
+    return pm25_localizedStringForKey(key, value: nil, table: nil, bundle: bundle)
+}
+
+func pm25_localizedStringForKey(key: String, value: String?, table: String?, bundle: NSBundle?) -> String {
+    let kLocalizedStringNotFound = "kLocalizedStringNotFound"
+    // First try main bundle
+    var string: String = NSBundle.mainBundle().localizedStringForKey(key, value: kLocalizedStringNotFound, table: table)
+    
+    // Then try the backup bundle
+    if string == kLocalizedStringNotFound {
+        string = bundle!.localizedStringForKey(key, value: kLocalizedStringNotFound, table: table)
+    }
+    
+    // Still not found?
+    if string == kLocalizedStringNotFound {
+        print("No localized string for '\(key)' in '\(table)'")
+        if let value = value {
+            string = value.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 ? value : key
+        } else {
+            string = key
+        }
+    }
+    
+    return string
+}
