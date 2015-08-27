@@ -53,7 +53,7 @@ public struct PrimaryPollutant: OptionSetType, CustomStringConvertible {
         if pollutants.isEmpty {
             pollutants += [pm25_localizedString("None", comment: "Primary pollutants")]
         }
-        return separator.join(pollutants)
+        return pollutants.joinWithSeparator(separator)
     }
     
     public init(rawValue: Int) {

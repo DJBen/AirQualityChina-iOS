@@ -47,7 +47,7 @@ class QueryTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("QueryCell", forIndexPath: indexPath)
-        let titles = queries.keys.array
+        let titles = Array(queries.keys)
         let title = titles[indexPath.row]
         cell.textLabel?.text = title
         return cell
@@ -80,14 +80,14 @@ class QueryTableViewController: UITableViewController {
             let indexPath = sender as! NSIndexPath
             let query = queryForIndexPath(indexPath)
             let vc = segue.destinationViewController as! CityTableViewController
-            vc.navigationItem.title = queries.keys.array[indexPath.row]
+            vc.navigationItem.title = Array(queries.keys)[indexPath.row]
             vc.query = query
         case AllDetailSegueIdentifier:
             let indexPath = sender as! NSIndexPath
             let query = queryForIndexPath(indexPath)
             let vc = segue.destinationViewController as! AllDetailTableViewController
             vc.query = query
-            vc.navigationItem.title = queries.keys.array[indexPath.row]
+            vc.navigationItem.title = Array(queries.keys)[indexPath.row]
         default:
             break
         }
@@ -96,7 +96,7 @@ class QueryTableViewController: UITableViewController {
     // MARK: - Helper methods
     
     private func queryForIndexPath(indexPath: NSIndexPath) -> Query {
-        let array = queries.keys.array
+        let array = Array(queries.keys)
         return queries[array[indexPath.row]]!
     }
 

@@ -55,7 +55,7 @@ public class DataSample: NSObject {
         let airQualityItem = airQuality != nil ? ["\(airQuality!)"] : []
         let primaryPollutantItem = primaryPollutant != nil ? ["\(primaryPollutant!)"] : []
         
-        return ", ".join(airQualityItem + primaryPollutantItem + properties.filter { (_, value) -> Bool in
+        return (airQualityItem + primaryPollutantItem + properties.filter { (_, value) -> Bool in
             return value != nil
         }.map { (key, value) -> String in
             if let param = value as? AirQualityParameter {
@@ -65,7 +65,7 @@ public class DataSample: NSObject {
             } else {
                 return "\(key)"
             }
-        })
+        }).joinWithSeparator(", ")
     }
     
     init?(query: Query, dictionary: [String: AnyObject]) {

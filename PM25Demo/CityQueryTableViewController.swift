@@ -57,7 +57,7 @@ class CityQueryTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(CityQueryCellIdentifier, forIndexPath: indexPath)
-        let title = queries.keys.array[indexPath.row]
+        let title = Array(queries.keys)[indexPath.row]
         cell.textLabel?.text = title
         return cell
     }
@@ -71,7 +71,7 @@ class CityQueryTableViewController: UITableViewController {
         case QueryResultSegueIdentifier:
             let vc = segue.destinationViewController as! QueryResultTableViewController
             let indexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
-            let title = queries.keys.array[indexPath.row]
+            let title = Array(queries.keys)[indexPath.row]
             vc.query = queries[title]
             vc.navigationItem.title = title
         default:
