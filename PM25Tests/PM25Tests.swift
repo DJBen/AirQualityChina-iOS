@@ -39,7 +39,7 @@ class PM25Tests: XCTestCase {
                                 Query.CityO3(city: "Nanjing", fields: .Default),
                                 Query.CityCO(city: "Nanjing", fields: .Default),
                                 Query.CityAQI(city: "Nanjing", fields: .Default)]
-        queries.map { query -> Void in
+        queries.forEach { query -> Void in
             let url = query.URL
             XCTAssertTrue((url.absoluteString as NSString).containsString("\(query.path)"), "should contain \(url.absoluteString)")
             checkQueries(url.query!, equalToParameters: ["token": PM25Tests.token, "city": "Nanjing".lowercaseString])
@@ -92,7 +92,7 @@ class PM25Tests: XCTestCase {
         XCTAssertNotNil(result.cities)
         XCTAssertNil(result.monitoringStations)
         XCTAssertTrue(result.cities!.count > 0)
-        ["上海", "北京", "西双版纳州", "吉林"].map { (cityName) -> Void in
+        ["上海", "北京", "西双版纳州", "吉林"].forEach { (cityName) -> Void in
             XCTAssertTrue(result.cities!.contains(cityName))
         }
     }
@@ -108,10 +108,10 @@ class PM25Tests: XCTestCase {
         // Test if last is average of the samples, while the others are not
         let avgSample = result.samples!.last!
         XCTAssertTrue(avgSample.isAverageSample)
-        result.samples![0..<result.samples!.count - 1].map { (sample) -> Void in
+        result.samples![0..<result.samples!.count - 1].forEach { (sample) -> Void in
             XCTAssertFalse(sample.isAverageSample)
         }
-        result.samples!.map { sample -> Void in
+        result.samples!.forEach { sample -> Void in
             checkSampleIsValid(sample)
             checkField(sample.PM25)
         }
@@ -125,10 +125,10 @@ class PM25Tests: XCTestCase {
         XCTAssertNil(result.monitoringStations)
         let avgSample = result.samples!.last!
         XCTAssertTrue(avgSample.isAverageSample)
-        result.samples![0..<result.samples!.count - 1].map { (sample) -> Void in
+        result.samples![0..<result.samples!.count - 1].forEach { (sample) -> Void in
             XCTAssertFalse(sample.isAverageSample)
         }
-        result.samples!.map { sample -> Void in
+        result.samples!.forEach { sample -> Void in
             checkSampleIsValid(sample)
             checkField(sample.PM25)
             checkField(sample.PM10)
@@ -137,6 +137,8 @@ class PM25Tests: XCTestCase {
             checkField(sample.NO2)
             checkField(sample.O3)
             checkField(sample.O3_8h)
+            XCTAssertEqual(sample.CO?.unit, AirQualityParameter.Unit.MiligramsPerCubicMeter)
+            XCTAssertEqual(sample.PM10?.unit, AirQualityParameter.Unit.MicrogramsPerCubicMeter)
         }
     }
     
@@ -217,7 +219,7 @@ class PM25Tests: XCTestCase {
     }
     
     func checkQueries(query: String, equalToParameters dict: [String: String]) {
-        dict.map { (name, value) -> Void in
+        dict.forEach { (name, value) -> Void in
             XCTAssertTrue((query as NSString).containsString("\(name)=\(value)"), "query \(name) should have value \(value).")
         }
     }

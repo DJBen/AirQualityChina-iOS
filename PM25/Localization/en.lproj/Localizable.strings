@@ -10,10 +10,10 @@
 
 "Great" = "Great";
 "Okay" = "Okay";
-"Lightly polluted" = "Lightly polluted";
-"Moderately polluted" = "Moderately polluted";
+"Lightly Polluted" = "Lightly Polluted";
+"Moderately Polluted" = "Moderately Polluted";
 "Heavily Polluted" = "Heavily Polluted";
-"Severely polluted" = "Severely polluted";
+"Severely Polluted" = "Severely Polluted";
 
 /* Primary pollutants */
 
@@ -23,7 +23,7 @@
 "NO2" = "Nitrogen dioxide";
 "CO" = "Carbon monoxide";
 "O3" = "Ozone";
-"O3_8h" = "Ozone over 8 hours";
+"O3_8h" = "Ozone 8h peak";
 "None" = "None";
 ", " = ", ";
 

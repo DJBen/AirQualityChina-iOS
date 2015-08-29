@@ -10,10 +10,10 @@
 
 "Great" = "优";
 "Okay" = "良";
-"Lightly polluted" = "轻度污染";
-"Moderately polluted" = "中度污染";
+"Lightly Polluted" = "轻度污染";
+"Moderately Polluted" = "中度污染";
 "Heavily Polluted" = "重度污染";
-"Severely polluted" = "严重污染";
+"Severely Polluted" = "严重污染";
 
 /* Primary pollutants */
 
@@ -23,7 +23,7 @@
 "NO2" = "二氧化氮";
 "CO" = "一氧化碳";
 "O3" = "臭氧";
-"O3_8h" = "臭氧8小时";
+"O3_8h" = "臭氧8小时峰值";
 "None" = "无";
 ", " = "，";
 

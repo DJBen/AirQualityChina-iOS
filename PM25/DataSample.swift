@@ -28,7 +28,7 @@ public class DataSample: NSObject {
     public internal(set) var PM10: AirQualityParameter?
     public internal(set) var PM25: AirQualityParameter?
     public internal(set) var AQI: Int?
-    public internal(set) var primaryPollutant: PrimaryPollutant?
+    public internal(set) var primaryPollutant: Pollutant?
     public internal(set) var airQuality: AirQualityRating?
     
     public var isAverageSample: Bool {
@@ -81,11 +81,11 @@ public class DataSample: NSObject {
         self.city = city
         timestamp = NSDate.pm25_dateFromString(timeString)!
         
-        let parseDict: (dict: [String: AnyObject], field: String) -> AirQualityParameter = { dict, field in
+        let parseDict: (type: Pollutant, dict: [String: AnyObject], field: String, unit: AirQualityParameter.Unit) -> AirQualityParameter = { type, dict, field, unit in
             let field_24h = field + "_24h"
             let value = dict[field] as? Double
             let dayValue = dict[field_24h] as? Double
-            let param = AirQualityParameter(currentValue: value!, dayAverageValue: dayValue)
+            let param = AirQualityParameter(pollutantType: type, currentValue: value!, dayAverageValue: dayValue, unit: unit)
             return param
         }
         
@@ -124,10 +124,10 @@ public class DataSample: NSObject {
             fallthrough
         case .CityDetails(_), .StationDetails(_), .AllCityDetails, .AllCityRanking:
             station = Station(dictionary: dictionary)
-            primaryPollutant = PrimaryPollutant(APIObject: dictionary["primary_pollutant"])
+            primaryPollutant = Pollutant(APIObject: dictionary["primary_pollutant"])
             let qualityObject = dictionary["quality"]
             guard let airQuality = AirQualityRating.ratingFromAPIObject(APIObject: qualityObject) else {
-                print("Error: fail to convert \(qualityObject) to air quality. It is probably a bad sample. Discarded.")
+                print("Error: query \(query.URL) fail to convert \(qualityObject) to air quality. It is probably a bad sample. Discarded.")
                 super.init()
                 return nil
             }
@@ -137,31 +137,42 @@ public class DataSample: NSObject {
             return nil
         }
         
+        let unit: AirQualityParameter.Unit
+
+        switch field {
+        case "co":
+            unit = AirQualityParameter.Unit.MiligramsPerCubicMeter
+        default:
+            unit = AirQualityParameter.Unit.MicrogramsPerCubicMeter
+        }
+        
         // Extract individual properties
         switch query {
         case .CityPM10(_):
-            PM10 = parseDict(dict: dictionary, field: field)
+            PM10 = parseDict(type: Pollutant.PM10, dict: dictionary, field: field, unit: unit)
         case .CityPM2_5(_):
-            PM25 = parseDict(dict: dictionary, field: field)
+            PM25 = parseDict(type: Pollutant.PM2_5, dict: dictionary, field: field, unit: unit)
         case .CitySO2(_):
-            SO2 = parseDict(dict: dictionary, field: field)
+            SO2 = parseDict(type: Pollutant.SO2, dict: dictionary, field: field, unit: unit)
         case .CityCO(_):
-            CO = parseDict(dict: dictionary, field: field)
+            CO = parseDict(type: Pollutant.CO, dict: dictionary, field: field, unit: unit)
         case .CityNO2(_):
-            NO2 = parseDict(dict: dictionary, field: field)
+            NO2 = parseDict(type: Pollutant.NO2, dict: dictionary, field: field, unit: unit)
         case .CityO3(_):
-            O3 = parseDict(dict: dictionary, field: field)
-            O3_8h = parseDict(dict: dictionary, field: "\(field)_8h")
+            O3 = parseDict(type: Pollutant.O3, dict: dictionary, field: field, unit: unit)
+            O3_8h = parseDict(type: Pollutant.O3_8h, dict: dictionary, field: "\(field)_8h", unit: unit)
         case .CityAQI(_):
             AQI = (dictionary["aqi"] as! Int)
         case .CityDetails(_), .StationDetails(_), .AllCityDetails, .AllCityRanking:
-            PM10 = parseDict(dict: dictionary, field: "pm10")
-            PM25 = parseDict(dict: dictionary, field: "pm2_5")
-            SO2 = parseDict(dict: dictionary, field: "so2")
-            NO2 = parseDict(dict: dictionary, field: "no2")
-            CO = parseDict(dict: dictionary, field: "co")
-            O3 = parseDict(dict: dictionary, field: "o3")
-            O3_8h = parseDict(dict: dictionary, field: "o3_8h")
+            let coUnit = AirQualityParameter.Unit.MiligramsPerCubicMeter
+            let otherUnit = AirQualityParameter.Unit.MicrogramsPerCubicMeter
+            PM10 = parseDict(type: Pollutant.PM10, dict: dictionary, field: "pm10", unit: otherUnit)
+            PM25 = parseDict(type: Pollutant.PM2_5, dict: dictionary, field: "pm2_5", unit: otherUnit)
+            SO2 = parseDict(type: Pollutant.SO2, dict: dictionary, field: "so2", unit: otherUnit)
+            NO2 = parseDict(type: Pollutant.NO2, dict: dictionary, field: "no2", unit: otherUnit)
+            CO = parseDict(type: Pollutant.CO, dict: dictionary, field: "co", unit: coUnit)
+            O3 = parseDict(type: Pollutant.O3, dict: dictionary, field: "o3", unit: otherUnit)
+            O3_8h = parseDict(type: Pollutant.O3_8h, dict: dictionary, field: "o3_8h", unit: otherUnit)
             AQI = (dictionary["aqi"] as! Int)
         default:
             break
