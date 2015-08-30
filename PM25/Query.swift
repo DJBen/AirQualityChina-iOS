@@ -8,7 +8,7 @@
 
 public typealias QueryExecutionBlock = (result: Result?, error: NSError?) -> Void
 
-public enum Query {
+public enum Query: Hashable {
     
     public enum QueryError: ErrorType {
         case ParseError
@@ -137,6 +137,14 @@ public enum Query {
         return url
     }
     
+    public var request: NSURLRequest {
+        return NSURLRequest(URL: URL)
+    }
+    
+    public var hashValue: Int {
+        return "PM25.Query".hash + URL.hash
+    }
+    
     public static func parseURL(URL: NSURL) -> Query? {
         guard let components = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false), path = components.path where components.scheme == "http" && components.host == PM25Manager.apiHost else {
             return nil
@@ -144,6 +152,7 @@ public enum Query {
         
         let city = components.queryItems?.filter({ $0.name == "city" }).first?.value?.capitalizedString
         let field = CityQueryField(queryItems: components.queryItems ?? [])
+        let stationCode = components.queryItems?.filter({ $0.name == "station_code" }).first?.value
         
         switch (path as NSString).lastPathComponent {
         case "pm2_5.json":
@@ -169,10 +178,10 @@ public enum Query {
             return Query.CityAQI(city: city!, fields: field)
         case "aqi_details.json":
             guard city != nil else { return nil }
-            return Query.CityAQI(city: city!, fields: field)
+            return Query.CityDetails(city: city!)
         case "aqis_by_station.json":
             guard city != nil else { return nil }
-            return Query.CityDetails(city: city!)
+            return Query.StationDetails(stationCode: stationCode!)
         case "station_names.json":
             guard city != nil else { return nil }
             return Query.StationList(city: city!)
@@ -185,10 +194,6 @@ public enum Query {
         default:
             return nil
         }
-    }
-    
-    public var request: NSURLRequest {
-        return NSURLRequest(URL: URL)
     }
     
     public func executeWithCompletion(completionBlock: QueryExecutionBlock) {
@@ -232,4 +237,10 @@ public enum Query {
             throw error
         }
     }
+
 }
+
+public func ==(lhs: Query, rhs: Query) -> Bool {
+    return lhs.URL == rhs.URL
+}
+
