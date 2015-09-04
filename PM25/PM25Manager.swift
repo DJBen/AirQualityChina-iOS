@@ -35,7 +35,7 @@ public class PM25Manager: NSObject {
     }
 }
 
-public func pm25_localizedString(key: String, comment: String) -> String {
+public func pm25_localizedString(key: String, comment: String?) -> String {
     let bundle = NSBundle(forClass: PM25Manager.self)
     return pm25_localizedStringForKey(key, value: nil, table: nil, bundle: bundle)
 }

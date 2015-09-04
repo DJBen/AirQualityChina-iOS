@@ -119,6 +119,25 @@ public enum AirQualityRating: CustomStringConvertible {
         return pm25_localizedString(key, comment: "The description of air quality rating")
     }
     
+    public var abbreviatedDescription: String {
+        let key: String
+        switch self {
+        case .Great:
+            key = "G"
+        case .Okay:
+            key = "OK"
+        case .LightlyPolluted:
+            key = "LP"
+        case .ModeratelyPolluted:
+            key = "MP"
+        case .HeavilyPolluted:
+            key = "HP"
+        case .SeverelyPolluted:
+            key = "SP"
+        }
+        return pm25_localizedString(key, comment: "The description of air quality rating, abbreviated")
+    }
+    
     public static func ratingFromAPIObject(APIObject object: AnyObject?) -> AirQualityRating? {
         guard let string = object as? String else {
             return nil

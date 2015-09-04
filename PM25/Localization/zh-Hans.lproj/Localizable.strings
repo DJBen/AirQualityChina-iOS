@@ -15,6 +15,13 @@
 "Heavily Polluted" = "重度污染";
 "Severely Polluted" = "严重污染";
 
+"G" = "优";
+"OK" = "良";
+"LP" = "轻度";
+"MP" = "中度";
+"HP" = "重度";
+"SP" = "严重";
+
 /* Primary pollutants */
 
 "PM2_5" = "细颗粒物(PM2.5)";
