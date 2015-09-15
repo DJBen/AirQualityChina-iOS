@@ -32,13 +32,17 @@ public class DataSample: NSObject {
     public internal(set) var airQuality: AirQualityRating?
     
     public var isAverageSample: Bool {
-        switch query {
-        case .AllCityRanking:
-            return false
-        default:
-            break
+        if let pm25Query = query as? PM25Query {
+            switch pm25Query {
+            case .AllCityRanking:
+                return false
+            default:
+                break
+            }
+            return station == nil
+        } else {
+            return true
         }
-        return station == nil
     }
     
     public override var description: String {
@@ -62,13 +66,25 @@ public class DataSample: NSObject {
                 return "\(key): \(param)"
             } else if let param = value as? Double {
                 return "\(key): \(param)"
+            } else if let param = value as? Int {
+                return "\(key): \(param)"
             } else {
                 return "\(key)"
             }
         }).joinWithSeparator(", ")
     }
     
-    init?(query: Query, dictionary: [String: AnyObject]) {
+    init(USEmbassyQuery query: USEmbassyQuery, city: String, timestamp: NSDate, PM2_5: Double, AQI: Int, rating: String) {
+        self.timestamp = timestamp
+        self.city = city
+        self.query = query
+        self.PM25 = AirQualityParameter(pollutantType: Pollutant.PM2_5, currentValue: PM2_5, dayAverageValue: nil, unit: .MicrogramsPerCubicMeter)
+        self.AQI = AQI
+        self.airQuality = USEmbassyAirQualityRating.ratingFromAPIObject(APIObject: rating)
+        super.init()
+    }
+    
+    init?(pm25Query query: PM25Query, dictionary: [String: AnyObject]) {
         self.query = query
         
         guard let timeString = dictionary["time_point"] as? String, city = dictionary["area"] as? String else {
@@ -126,7 +142,7 @@ public class DataSample: NSObject {
             station = Station(dictionary: dictionary)
             primaryPollutant = Pollutant(APIObject: dictionary["primary_pollutant"])
             let qualityObject = dictionary["quality"]
-            guard let airQuality = AirQualityRating.ratingFromAPIObject(APIObject: qualityObject) else {
+            guard let airQuality = ChinaAirQualityRating.ratingFromAPIObject(APIObject: qualityObject) else {
                 print("Error: query \(query.URL) fail to convert \(qualityObject) to air quality. It is probably a bad sample. Discarded.")
                 super.init()
                 return nil

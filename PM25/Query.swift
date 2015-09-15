@@ -8,9 +8,18 @@
 
 public typealias QueryExecutionBlock = (result: Result?, error: NSError?) -> Void
 
-public enum Query: Hashable {
+public protocol Query {
+    var request: NSURLRequest { get }
+    func executeWithCompletion(completionBlock: QueryExecutionBlock)
+}
+
+public protocol QueryError: ErrorType {
     
-    public enum QueryError: ErrorType {
+}
+
+public enum PM25Query: Query, Hashable {
+    
+    public enum PM25QueryError: QueryError {
         case ParseError
         case MissingParameter
         case NoData
@@ -145,7 +154,7 @@ public enum Query: Hashable {
         return "PM25.Query".hash + URL.hash
     }
     
-    public static func parseURL(URL: NSURL) -> Query? {
+    public static func parseURL(URL: NSURL) -> PM25Query? {
         guard let components = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false), path = components.path where components.scheme == "http" && components.host == PM25Manager.apiHost else {
             return nil
         }
@@ -157,40 +166,40 @@ public enum Query: Hashable {
         switch (path as NSString).lastPathComponent {
         case "pm2_5.json":
             guard city != nil else { return nil }
-            return Query.CityPM2_5(city: city!, fields: field)
+            return PM25Query.CityPM2_5(city: city!, fields: field)
         case "pm10.json":
             guard city != nil else { return nil }
-            return Query.CityPM10(city: city!, fields: field)
+            return PM25Query.CityPM10(city: city!, fields: field)
         case "co.json":
             guard city != nil else { return nil }
-            return Query.CityCO(city: city!, fields: field)
+            return PM25Query.CityCO(city: city!, fields: field)
         case "no2.json":
             guard city != nil else { return nil }
-            return Query.CityNO2(city: city!, fields: field)
+            return PM25Query.CityNO2(city: city!, fields: field)
         case "so2.json":
             guard city != nil else { return nil }
-            return Query.CitySO2(city: city!, fields: field)
+            return PM25Query.CitySO2(city: city!, fields: field)
         case "o3.json":
             guard city != nil else { return nil }
-            return Query.CityO3(city: city!, fields: field)
+            return PM25Query.CityO3(city: city!, fields: field)
         case "only_aqi.json":
             guard city != nil else { return nil }
-            return Query.CityAQI(city: city!, fields: field)
+            return PM25Query.CityAQI(city: city!, fields: field)
         case "aqi_details.json":
             guard city != nil else { return nil }
-            return Query.CityDetails(city: city!)
+            return PM25Query.CityDetails(city: city!)
         case "aqis_by_station.json":
             guard city != nil else { return nil }
-            return Query.StationDetails(stationCode: stationCode!)
+            return PM25Query.StationDetails(stationCode: stationCode!)
         case "station_names.json":
             guard city != nil else { return nil }
-            return Query.StationList(city: city!)
+            return PM25Query.StationList(city: city!)
         case "querys.json":
-            return Query.CityNames
+            return PM25Query.CityNames
         case "all_cities.json":
-            return Query.AllCityDetails
+            return PM25Query.AllCityDetails
         case "aqi_ranking.json":
-            return Query.AllCityRanking
+            return PM25Query.AllCityRanking
         default:
             return nil
         }
@@ -229,10 +238,10 @@ public enum Query: Hashable {
             if let object = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? NSObject {
                 return try Result(query: self, json: object)
             } else {
-                throw Query.QueryError.ParseError
+                throw PM25Query.PM25QueryError.ParseError
             }
         } catch is NSCocoaError {
-            throw Query.QueryError.ParseError
+            throw PM25Query.PM25QueryError.ParseError
         } catch {
             throw error
         }
@@ -240,7 +249,7 @@ public enum Query: Hashable {
 
 }
 
-public func ==(lhs: Query, rhs: Query) -> Bool {
+public func ==(lhs: PM25Query, rhs: PM25Query) -> Bool {
     return lhs.URL == rhs.URL
 }
 

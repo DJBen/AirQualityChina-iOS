@@ -1,0 +1,4 @@
+module PM25TFHpple {
+    header "hpple/PM25TFHpple.h"
+    export *
+}

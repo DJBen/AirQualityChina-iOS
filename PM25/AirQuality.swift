@@ -92,7 +92,12 @@ public struct Pollutant: OptionSetType, CustomStringConvertible {
     }
 }
 
-public enum AirQualityRating: CustomStringConvertible {
+public protocol AirQualityRating: CustomStringConvertible {
+    var abbreviatedDescription: String { get }
+    static func ratingFromAPIObject(APIObject object: AnyObject?) -> Self?
+}
+
+public enum ChinaAirQualityRating: AirQualityRating {
     case Great
     case Okay
     case LightlyPolluted
@@ -138,7 +143,7 @@ public enum AirQualityRating: CustomStringConvertible {
         return pm25_localizedString(key, comment: "The description of air quality rating, abbreviated")
     }
     
-    public static func ratingFromAPIObject(APIObject object: AnyObject?) -> AirQualityRating? {
+    public static func ratingFromAPIObject(APIObject object: AnyObject?) -> ChinaAirQualityRating? {
         guard let string = object as? String else {
             return nil
         }
@@ -182,8 +187,7 @@ public class AirQualityParameter: NSObject {
     }
     
     public override var description: String {
-        let dayAverageString = dayAverageValue != nil ? "\(dayAverageValue!)" : ""
-        return "\(currentValue) | \(dayAverageString)"
+        return (["\(currentValue)"] + (dayAverageValue != nil ? ["\(dayAverageValue!)"] : [])).joinWithSeparator(" | ")
     }
 
 }

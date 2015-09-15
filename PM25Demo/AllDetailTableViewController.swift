@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PM25
 
 let AllDetailCellIdentifier = "AllDetailCell"
 
@@ -48,10 +49,14 @@ class AllDetailTableViewController: PM25TableViewController {
 
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        switch query! {
-        case .AllCityDetails, .AllCityRanking:
-            return 80
-        default:
+        if let pm25Query = query as? PM25Query {
+            switch pm25Query {
+            case .AllCityDetails, .AllCityRanking:
+                return 80
+            default:
+                return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+            }
+        } else {
             return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
         }
     }

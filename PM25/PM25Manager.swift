@@ -23,13 +23,13 @@ public class PM25Manager: NSObject {
     }
     
     public func monitoringStationsInCity(city: String, completionBlock: MonitoringStationBlock) {
-        Query.StationList(city: city).executeWithCompletion { (result, error) -> Void in
+        PM25Query.StationList(city: city).executeWithCompletion { (result, error) -> Void in
             completionBlock(stations: result?.monitoringStations, error: error)
         }
     }
     
     public func fetchCityNamesWithCompletion(completionBlock: CityNamesBlock) {
-        Query.CityNames.executeWithCompletion { (result, error) -> Void in
+        PM25Query.CityNames.executeWithCompletion { (result, error) -> Void in
             completionBlock(cities: result?.cities, error: error)
         }
     }

@@ -15,9 +15,9 @@ let AllDetailSegueIdentifier = "AllDetailSegue"
 class QueryTableViewController: UITableViewController {
     
     private let queries: [String: PM25.Query] = [
-        "Cities": Query.CityNames,
-        "All City Details": Query.AllCityDetails,
-        "All City Ranking": Query.AllCityRanking
+        "Cities": PM25Query.CityNames,
+        "All City Details": PM25Query.AllCityDetails,
+        "All City Ranking": PM25Query.AllCityRanking
     ]
 
     override func viewDidLoad() {
@@ -56,18 +56,21 @@ class QueryTableViewController: UITableViewController {
     // MARK: - Table view delegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        switch queryForIndexPath(indexPath) {
-        case .CityNames:
-            performSegueWithIdentifier(CitySegueIdentifier, sender: indexPath)
-        default:
-            let alert = UIAlertController(title: "Limited API", message: "This API call can only be called 20 times per day, are you sure you want to invoke it?", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            }))
-            alert.addAction(UIAlertAction(title: "Continue", style: .Default, handler: { (_) -> Void in
-                self.performSegueWithIdentifier(AllDetailSegueIdentifier, sender: indexPath)
-            }))
-            self.presentViewController(alert, animated: true, completion: nil)
+        let query = queryForIndexPath(indexPath)
+        if let pm25Query = query as? PM25Query {
+            switch pm25Query {
+            case .CityNames:
+                performSegueWithIdentifier(CitySegueIdentifier, sender: indexPath)
+            default:
+                let alert = UIAlertController(title: "Limited API", message: "This API call can only be called 20 times per day, are you sure you want to invoke it?", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
+                    self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                }))
+                alert.addAction(UIAlertAction(title: "Continue", style: .Default, handler: { (_) -> Void in
+                    self.performSegueWithIdentifier(AllDetailSegueIdentifier, sender: indexPath)
+                }))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
         }
     }
     

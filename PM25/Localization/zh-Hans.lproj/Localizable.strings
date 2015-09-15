@@ -15,6 +15,22 @@
 "Heavily Polluted" = "重度污染";
 "Severely Polluted" = "严重污染";
 
+"Good" = "优";
+"Moderate" = "良";
+"Unhealthy for Sensitive Groups" = "轻度污染";
+"Unhealthy" = "中度污染";
+"Very Unhealthy" = "重度污染";
+"Hazardous" = "严重污染";
+"BeyondIndex" = "污染爆表";
+
+"G" = "优";
+"M" = "良";
+"USG" = "轻度";
+"U" = "中度";
+"VU" = "重度";
+"H" = "严重";
+"!!!" = "爆表";
+
 "G" = "优";
 "OK" = "良";
 "LP" = "轻度";

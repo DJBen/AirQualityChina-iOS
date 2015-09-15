@@ -28,6 +28,14 @@
 		309B85BE1B62AB2A005B2204 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309B85BD1B62AB2A005B2204 /* Station.swift */; };
 		30C9B1961B75207800598B20 /* CityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C9B1951B75207800598B20 /* CityTableViewController.swift */; };
 		F42851681B839E6500706671 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F42851651B839E6500706671 /* Localizable.strings */; };
+		F43DA8181BA7F279008DF437 /* USEmbassyQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43DA8171BA7F279008DF437 /* USEmbassyQuery.swift */; settings = {ASSET_TAGS = (); }; };
+		F43DA81A1BA7F9E0008DF437 /* USEmbassyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43DA8191BA7F9E0008DF437 /* USEmbassyTests.swift */; settings = {ASSET_TAGS = (); }; };
+		F43DA8311BA800B2008DF437 /* PM25TFHpple.h in Headers */ = {isa = PBXBuildFile; fileRef = F43DA82B1BA800B2008DF437 /* PM25TFHpple.h */; settings = {ASSET_TAGS = (); }; };
+		F43DA8321BA800B2008DF437 /* PM25TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = F43DA82C1BA800B2008DF437 /* PM25TFHpple.m */; settings = {ASSET_TAGS = (); }; };
+		F43DA8331BA800B2008DF437 /* PM25TFHppleElement.h in Headers */ = {isa = PBXBuildFile; fileRef = F43DA82D1BA800B2008DF437 /* PM25TFHppleElement.h */; settings = {ASSET_TAGS = (); }; };
+		F43DA8341BA800B2008DF437 /* PM25TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F43DA82E1BA800B2008DF437 /* PM25TFHppleElement.m */; settings = {ASSET_TAGS = (); }; };
+		F43DA8351BA800B2008DF437 /* PM25XPathQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = F43DA82F1BA800B2008DF437 /* PM25XPathQuery.h */; settings = {ASSET_TAGS = (); }; };
+		F43DA8361BA800B2008DF437 /* PM25XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = F43DA8301BA800B2008DF437 /* PM25XPathQuery.m */; settings = {ASSET_TAGS = (); }; };
 		F4C244921B798E8D0055980C /* CityQueryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C244911B798E8D0055980C /* CityQueryTableViewController.swift */; };
 		F4C244941B7A03F30055980C /* QueryResultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C244931B7A03F30055980C /* QueryResultTableViewController.swift */; };
 		F4C244961B7A06240055980C /* PM25TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C244951B7A06240055980C /* PM25TableViewController.swift */; };
@@ -79,6 +87,15 @@
 		30C9B1951B75207800598B20 /* CityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewController.swift; sourceTree = "<group>"; };
 		F42851661B839E6500706671 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F42851671B839E6500706671 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		F43DA8171BA7F279008DF437 /* USEmbassyQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = USEmbassyQuery.swift; sourceTree = "<group>"; };
+		F43DA8191BA7F9E0008DF437 /* USEmbassyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = USEmbassyTests.swift; sourceTree = "<group>"; };
+		F43DA82B1BA800B2008DF437 /* PM25TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PM25TFHpple.h; sourceTree = "<group>"; };
+		F43DA82C1BA800B2008DF437 /* PM25TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PM25TFHpple.m; sourceTree = "<group>"; };
+		F43DA82D1BA800B2008DF437 /* PM25TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PM25TFHppleElement.h; sourceTree = "<group>"; };
+		F43DA82E1BA800B2008DF437 /* PM25TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PM25TFHppleElement.m; sourceTree = "<group>"; };
+		F43DA82F1BA800B2008DF437 /* PM25XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PM25XPathQuery.h; sourceTree = "<group>"; };
+		F43DA8301BA800B2008DF437 /* PM25XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PM25XPathQuery.m; sourceTree = "<group>"; };
+		F43DA85A1BA8822A008DF437 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		F4C244911B798E8D0055980C /* CityQueryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CityQueryTableViewController.swift; path = PM25Demo/CityQueryTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		F4C244931B7A03F30055980C /* QueryResultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryResultTableViewController.swift; sourceTree = "<group>"; };
 		F4C244951B7A06240055980C /* PM25TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PM25TableViewController.swift; sourceTree = "<group>"; };
@@ -170,8 +187,10 @@
 				309B85BD1B62AB2A005B2204 /* Station.swift */,
 				303CE86E1B719ADC0006B944 /* AirQuality.swift */,
 				307F6B7A1B66A15B00F73AC7 /* Query.swift */,
+				F43DA8171BA7F279008DF437 /* USEmbassyQuery.swift */,
 				303CE86C1B719A740006B944 /* DataSample.swift */,
 				303CE86A1B7199540006B944 /* Result.swift */,
+				F43DA82A1BA800A2008DF437 /* PM25TFHpple */,
 				F42851641B839E6500706671 /* Localization */,
 			);
 			path = PM25;
@@ -182,6 +201,7 @@
 			children = (
 				307F6B751B65D12300F73AC7 /* Resources */,
 				309B85B01B61A4FA005B2204 /* PM25Tests.swift */,
+				F43DA8191BA7F9E0008DF437 /* USEmbassyTests.swift */,
 				309B85B21B61A4FA005B2204 /* Info.plist */,
 			);
 			path = PM25Tests;
@@ -195,6 +215,21 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		F43DA82A1BA800A2008DF437 /* PM25TFHpple */ = {
+			isa = PBXGroup;
+			children = (
+				F43DA85A1BA8822A008DF437 /* module.modulemap */,
+				F43DA82B1BA800B2008DF437 /* PM25TFHpple.h */,
+				F43DA82C1BA800B2008DF437 /* PM25TFHpple.m */,
+				F43DA82D1BA800B2008DF437 /* PM25TFHppleElement.h */,
+				F43DA82E1BA800B2008DF437 /* PM25TFHppleElement.m */,
+				F43DA82F1BA800B2008DF437 /* PM25XPathQuery.h */,
+				F43DA8301BA800B2008DF437 /* PM25XPathQuery.m */,
+			);
+			name = PM25TFHpple;
+			path = hpple;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -202,7 +237,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F43DA8311BA800B2008DF437 /* PM25TFHpple.h in Headers */,
+				F43DA8351BA800B2008DF437 /* PM25XPathQuery.h in Headers */,
 				309B85A51B61A4FA005B2204 /* PM25.h in Headers */,
+				F43DA8331BA800B2008DF437 /* PM25TFHppleElement.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,12 +395,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F43DA8181BA7F279008DF437 /* USEmbassyQuery.swift in Sources */,
 				309B85BE1B62AB2A005B2204 /* Station.swift in Sources */,
+				F43DA8361BA800B2008DF437 /* PM25XPathQuery.m in Sources */,
 				307F6B7B1B66A15B00F73AC7 /* Query.swift in Sources */,
 				303CE86B1B7199540006B944 /* Result.swift in Sources */,
 				309B85BC1B61A51B005B2204 /* PM25Manager.swift in Sources */,
 				303CE86F1B719ADC0006B944 /* AirQuality.swift in Sources */,
+				F43DA8341BA800B2008DF437 /* PM25TFHppleElement.m in Sources */,
 				303CE86D1B719A740006B944 /* DataSample.swift in Sources */,
+				F43DA8321BA800B2008DF437 /* PM25TFHpple.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +412,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F43DA81A1BA7F9E0008DF437 /* USEmbassyTests.swift in Sources */,
 				309B85B11B61A4FA005B2204 /* PM25Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -537,12 +580,18 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = PM25/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "";
+				MODULEMAP_PRIVATE_FILE = "";
+				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.jhu.djben.PM25;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/PM25";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -555,32 +604,47 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = PM25/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "";
+				MODULEMAP_PRIVATE_FILE = "";
+				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.jhu.djben.PM25;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/PM25";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};
 		309B85B91B61A4FA005B2204 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = PM25Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_PRIVATE_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.jhu.djben.PM25Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/PM25";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		309B85BA1B61A4FA005B2204 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = PM25Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_PRIVATE_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.jhu.djben.PM25Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/PM25";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};

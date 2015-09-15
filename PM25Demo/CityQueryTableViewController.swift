@@ -18,15 +18,15 @@ class CityQueryTableViewController: UITableViewController {
     
     lazy private var queries: [String: PM25.Query] = {
         return [
-            "City stations": Query.StationList(city: self.city),
-            "City PM 2.5": Query.CityPM2_5(city: self.city, fields: .Default),
-            "City PM 10": Query.CityPM10(city: self.city, fields: .Default),
-            "City O3": Query.CityO3(city: self.city, fields: .Default),
-            "City NO2": Query.CityNO2(city: self.city, fields: .Default),
-            "City CO": Query.CityCO(city: self.city, fields: .Default),
-            "City SO2": Query.CitySO2(city: self.city, fields: .Default),
-            "City AQI": Query.CityAQI(city: self.city, fields: .Default),
-            "City details": Query.CityDetails(city: self.city)
+            "City stations": PM25Query.StationList(city: self.city),
+            "City PM 2.5": PM25Query.CityPM2_5(city: self.city, fields: .Default),
+            "City PM 10": PM25Query.CityPM10(city: self.city, fields: .Default),
+            "City O3": PM25Query.CityO3(city: self.city, fields: .Default),
+            "City NO2": PM25Query.CityNO2(city: self.city, fields: .Default),
+            "City CO": PM25Query.CityCO(city: self.city, fields: .Default),
+            "City SO2": PM25Query.CitySO2(city: self.city, fields: .Default),
+            "City AQI": PM25Query.CityAQI(city: self.city, fields: .Default),
+            "City details": PM25Query.CityDetails(city: self.city)
         ]
     }()
 

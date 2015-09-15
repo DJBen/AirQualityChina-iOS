@@ -32,13 +32,13 @@ class PM25Tests: XCTestCase {
     }
     
     func test_1_1_to_1_6_url_formation_is_correct() {
-        let queries: [Query] = [Query.CityPM2_5(city: "Nanjing", fields: .Default),
-                                Query.CityPM10(city: "Nanjing", fields: .Default),
-                                Query.CityNO2(city: "Nanjing", fields: .Default),
-                                Query.CitySO2(city: "Nanjing", fields: .Default),
-                                Query.CityO3(city: "Nanjing", fields: .Default),
-                                Query.CityCO(city: "Nanjing", fields: .Default),
-                                Query.CityAQI(city: "Nanjing", fields: .Default)]
+        let queries: [PM25Query] = [PM25Query.CityPM2_5(city: "Nanjing", fields: .Default),
+                                PM25Query.CityPM10(city: "Nanjing", fields: .Default),
+                                PM25Query.CityNO2(city: "Nanjing", fields: .Default),
+                                PM25Query.CitySO2(city: "Nanjing", fields: .Default),
+                                PM25Query.CityO3(city: "Nanjing", fields: .Default),
+                                PM25Query.CityCO(city: "Nanjing", fields: .Default),
+                                PM25Query.CityAQI(city: "Nanjing", fields: .Default)]
         queries.forEach { query -> Void in
             let url = query.URL
             XCTAssertTrue((url.absoluteString as NSString).containsString("\(query.path)"), "should contain \(url.absoluteString)")
@@ -47,11 +47,11 @@ class PM25Tests: XCTestCase {
     }
     
     func test_city_query_fields_are_correct() {
-        let q1 = Query.CityPM2_5(city: "Nanjing", fields: .Default)
+        let q1 = PM25Query.CityPM2_5(city: "Nanjing", fields: .Default)
         checkQueries(q1.URL.query!, equalToParameters: ["token": PM25Tests.token, "city": "Nanjing".lowercaseString, "avg": "true", "stations": "true"])
-        let q2 = Query.CityO3(city: "Beijing", fields: .Stations)
+        let q2 = PM25Query.CityO3(city: "Beijing", fields: .Stations)
         checkQueries(q2.URL.query!, equalToParameters: ["token": PM25Tests.token, "city": "Beijing".lowercaseString, "avg": "false", "stations": "true"])
-        let q3 = Query.CityAQI(city: "Shanghai", fields: .Average)
+        let q3 = PM25Query.CityAQI(city: "Shanghai", fields: .Average)
         checkQueries(q3.URL.query!, equalToParameters: ["token": PM25Tests.token, "city": "Shanghai".lowercaseString, "avg": "true", "stations": "false"])
         
     }
@@ -74,7 +74,7 @@ class PM25Tests: XCTestCase {
     }
     
     func test_monitoring_station_response_is_parsed_correctly() {
-        let query = Query.StationList(city: "Nanjing")
+        let query = PM25Query.StationList(city: "Nanjing")
         let result = try! Result(query: query, json: PM25Tests.nanjingMonitoringStations)
         XCTAssertNil(result.samples)
         XCTAssertNil(result.cities)
@@ -86,7 +86,7 @@ class PM25Tests: XCTestCase {
     }
     
     func test_city_name_response_is_parsed_correctly() {
-        let query = Query.CityNames
+        let query = PM25Query.CityNames
         let result = try! Result(query: query, json: PM25Tests.cityNames)
         XCTAssertNil(result.samples)
         XCTAssertNotNil(result.cities)
@@ -98,7 +98,7 @@ class PM25Tests: XCTestCase {
     }
     
     func test_pm2_5_is_parsed_correctly() {
-        let query = Query.CityPM2_5(city: "Nanjing", fields: .Default)
+        let query = PM25Query.CityPM2_5(city: "Nanjing", fields: .Default)
         let result = try! Result(query: query, json: PM25Tests.nanjingPM25)
         XCTAssertNotNil(result.samples)
         XCTAssertNil(result.cities)
@@ -118,7 +118,7 @@ class PM25Tests: XCTestCase {
     }
     
     func test_city_details_are_parsed_correctly() {
-        let query = Query.CityDetails(city: "Nanjing")
+        let query = PM25Query.CityDetails(city: "Nanjing")
         let result = try! Result(query: query, json: PM25Tests.nanjingCityDetails)
         XCTAssertNotNil(result.samples)
         XCTAssertNil(result.cities)
@@ -143,14 +143,14 @@ class PM25Tests: XCTestCase {
     }
     
     func test_error_is_parsed_correctly() {
-        let query = Query.CityNames
+        let query = PM25Query.CityNames
         let json = ["error": "Invalid authentication token."]
         do {
             let _ = try Result(query: query, json: json)
             XCTFail("Should throw")
         } catch {
             switch error {
-            case Query.QueryError.AuthenticationFailed:
+            case PM25Query.PM25QueryError.AuthenticationFailed:
                 break
             default:
                 XCTFail("Should be authentication failure error")
@@ -159,12 +159,12 @@ class PM25Tests: XCTestCase {
     }
     
     func test_parse_request_is_correct() {
-        let query = Query.CityNO2(city: "Haha", fields: .Default)
-        if let backQuery = Query.parseURL(query.URL) {
+        let query = PM25Query.CityNO2(city: "Haha", fields: .Default)
+        if let backQuery = PM25Query.parseURL(query.URL) {
             switch backQuery {
             case let .CityNO2(city, fields):
                 XCTAssertEqual(city, "Haha")
-                XCTAssertEqual(fields, Query.CityQueryField.Default)
+                XCTAssertEqual(fields, PM25Query.CityQueryField.Default)
             default:
                 XCTFail()
             }
@@ -173,14 +173,14 @@ class PM25Tests: XCTestCase {
         }
         
         let queries: [Query] = [
-            Query.CitySO2(city: "Mahsd", fields: .Stations),
-            Query.CityPM2_5(city: "Lalala", fields: .Average),
-            Query.StationList(city: "dusi"),
-            Query.AllCityRanking,
-            Query.AllCityDetails
+            PM25Query.CitySO2(city: "Mahsd", fields: .Stations),
+            PM25Query.CityPM2_5(city: "Lalala", fields: .Average),
+            PM25Query.StationList(city: "dusi"),
+            PM25Query.AllCityRanking,
+            PM25Query.AllCityDetails
         ]
         queries.forEach { (query) -> () in
-            XCTAssertEqual(Query.parseURL(query.request.URL!)!.URL, query.request.URL!)
+            XCTAssertEqual(PM25Query.parseURL(query.request.URL!)!.URL, query.request.URL!)
         }
     }
     

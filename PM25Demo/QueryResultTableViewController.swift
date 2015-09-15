@@ -41,28 +41,37 @@ class QueryResultTableViewController: PM25TableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch query! {
-        case Query.StationList(_):
-            cell = tableView.dequeueReusableCellWithIdentifier(QueryResultStationCellIdentifier, forIndexPath: indexPath)
-            let station = result!.monitoringStations![indexPath.row]
-            cell.textLabel?.text = "\(station)"
-        default:
+        if let pm25Query = query as? PM25Query {
+            switch pm25Query {
+            case PM25Query.StationList(_):
+                cell = tableView.dequeueReusableCellWithIdentifier(QueryResultStationCellIdentifier, forIndexPath: indexPath)
+                let station = result!.monitoringStations![indexPath.row]
+                cell.textLabel?.text = "\(station)"
+            default:
+                cell = tableView.dequeueReusableCellWithIdentifier(QueryResultCellIdentifier, forIndexPath: indexPath)
+                let sample = result!.samples![indexPath.row]
+                cell.textLabel?.text = sample.isAverageSample ? "City average" : "\(sample.station!)"
+                cell.detailTextLabel?.text = "\(sample)"
+            }
+        } else {
             cell = tableView.dequeueReusableCellWithIdentifier(QueryResultCellIdentifier, forIndexPath: indexPath)
             let sample = result!.samples![indexPath.row]
-            cell.textLabel?.text = sample.isAverageSample ? "City average" : "\(sample.station!)"
+            cell.textLabel?.text = "US embassy"
             cell.detailTextLabel?.text = "\(sample)"
         }
-
         return cell
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        switch query! {
-        case .CityDetails(_), .StationDetails(_):
-            return 80
-        default:
-            return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+        if let pm25Query = query as? PM25Query {
+            switch pm25Query {
+            case .CityDetails(_), .StationDetails(_):
+                return 80
+            default:
+                return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+            }
         }
+        return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
     }
 
     
@@ -75,7 +84,7 @@ class QueryResultTableViewController: PM25TableViewController {
             let vc = segue.destinationViewController as! QueryResultTableViewController
             let selectedIndexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
             let station = result!.monitoringStations![selectedIndexPath.row]
-            vc.query = Query.StationDetails(stationCode: station.code)
+            vc.query = PM25Query.StationDetails(stationCode: station.code)
         default:
             break
         }

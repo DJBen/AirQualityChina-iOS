@@ -30,9 +30,9 @@ class PM25TableViewController: UITableViewController {
         let title: String? = "Error"
         let message: String?
         switch error.code {
-        case Query.QueryError.APICallLimitReached._code:
+        case PM25Query.PM25QueryError.APICallLimitReached._code:
             message = "API call limit reached. Please have a rest."
-        case Query.QueryError.AuthenticationFailed._code:
+        case PM25Query.PM25QueryError.AuthenticationFailed._code:
             message = "Authentication failed."
         default:
             message = "Uncaught error \(error)"

@@ -15,6 +15,22 @@
 "Heavily Polluted" = "Heavily Polluted";
 "Severely Polluted" = "Severely Polluted";
 
+"Good" = "Good";
+"Moderate" = "Moderate";
+"Unhealthy for Sensitive Groups" = "Unhealthy for Sensitive Groups";
+"Unhealthy" = "Unhealthy";
+"Very Unhealthy" = "Very Unhealthy";
+"Hazardous" = "Hazardous";
+"BeyondIndex" = "BeyondIndex";
+
+"G" = "G";
+"M" = "M";
+"USG" = "USG";
+"U" = "U";
+"VU" = "VU";
+"H" = "H";
+"!!!" = "!!!";
+
 "G" = "G";
 "OK" = "OK";
 "LP" = "LP";
