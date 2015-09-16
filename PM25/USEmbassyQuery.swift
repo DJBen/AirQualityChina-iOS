@@ -11,7 +11,8 @@ import PM25TFHpple
 public enum USEmbassyQuery: Query {
     
     public enum USEmbassyQueryError: QueryError {
-        case ParseError
+        case ParseWebpageError
+        case ParseDataError
     }
     
     case CityAQI(city: String)
@@ -50,45 +51,68 @@ public enum USEmbassyQuery: Query {
         case .CityNames:
             completionBlock(result: Result(USEmbassyQuery: self, cities: USEmbassyQuery.cities), error: nil)
             return
-        case .CityAQI(let city):
-            let mainThreadCompletionBlock: QueryExecutionBlock = { result, error in
-                dispatch_async(dispatch_get_main_queue()) {
-                    completionBlock(result: result, error: error)
+        case .CityAQI(_):
+            let task = NSURLSession.sharedSession().dataTaskWithURL(URL, completionHandler: parseResponseWithHandler(completionBlock))
+            task.resume()
+        }
+    }
+    
+    public func parseResponseWithHandler(handler: QueryExecutionBlock) -> ((NSData?, NSURLResponse?, NSError?) -> Void) {
+        let handler: (NSData?, NSURLResponse?, NSError?) -> Void = { (data, response, error) -> Void in
+            switch self {
+            case .CityNames:
+                handler(result: Result(USEmbassyQuery: self, cities: USEmbassyQuery.cities), error: nil)
+                return
+            case .CityAQI(_):
+                let mainThreadCompletionBlock: QueryExecutionBlock = { result, error in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        handler(result: result, error: error)
+                    }
                 }
-            }
-            let task = NSURLSession.sharedSession().dataTaskWithURL(URL) { (data, response, error) -> Void in
                 guard error == nil else {
                     mainThreadCompletionBlock(result: nil, error: error)
                     return
                 }
-                let document = PM25TFHpple(HTMLData: data!)
-                let basePath = "//div[contains(@class, 'currentExposure')]"
-                let timestampPath = "/table/tr[1]/th/span"
-                // AQI format: ### AQI
-                let aqiPath = "/table/tr[2]/td"
-                let ratingPath = "/table/tr[3]/td"
-                // Concentration format: Concentration: ## \mu g/m^3
-                let concentrationPath = "/table/tr[5]/th/span"
-                if let timestamp = document.peekAtSearchWithXPathQuery(basePath + timestampPath).text()?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()),
-                    time = USEmbassyQuery.dateFormatter.dateFromString(timestamp),
-                    aqiString = document.peekAtSearchWithXPathQuery(basePath + aqiPath).text()?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).componentsSeparatedByString(" ")[0],
-                    aqi = Int(aqiString),
-                    rating = document.peekAtSearchWithXPathQuery(basePath + ratingPath).text()?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()),
-                    concentrationString = document.peekAtSearchWithXPathQuery(basePath + concentrationPath).text()?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "\r\n\t")).joinWithSeparator("") {
-                        let components = concentrationString.componentsSeparatedByString(" ")
-                        if components.count > 2 {
-                            let concentration = components[1]
-                            let sample = DataSample(USEmbassyQuery: self, city: city, timestamp: time, PM2_5: Double(concentration)!, AQI: aqi, rating: rating)
-                            let result = Result(USEmbassyQuery: self, sample: sample)
-                            mainThreadCompletionBlock(result: result, error: nil)
-                        } else {
-                            mainThreadCompletionBlock(result: nil, error: USEmbassyQuery.USEmbassyQueryError.ParseError as NSError)
-                        }
-                } else {
-                    mainThreadCompletionBlock(result: nil, error: USEmbassyQuery.USEmbassyQueryError.ParseError as NSError)
+                do {
+                    let result = try self.parseData(data!)
+                    mainThreadCompletionBlock(result: result, error: nil)
+                } catch {
+                    mainThreadCompletionBlock(result: nil, error: error as NSError)
                 }
             }
-            task.resume()
+        }
+        return handler
+    }
+    
+    public func parseData(data: NSData) throws -> Result {
+        guard case .CityAQI(let city) = self else {
+            throw USEmbassyQuery.USEmbassyQueryError.ParseDataError
+        }
+        let document = PM25TFHpple(HTMLData: data)
+        let basePath = "//div[contains(@class, 'currentExposure')]"
+        let timestampPath = "/table/tr[1]/th/span"
+        // AQI format: ### AQI
+        let aqiPath = "/table/tr[2]/td"
+        let ratingPath = "/table/tr[3]/td"
+        // Concentration format: Concentration: ## \mu g/m^3
+        let concentrationPath = "/table/tr[5]/th/span"
+        if let timestamp = document.peekAtSearchWithXPathQuery(basePath + timestampPath).text()?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()),
+            time = USEmbassyQuery.dateFormatter.dateFromString(timestamp),
+            aqiString = document.peekAtSearchWithXPathQuery(basePath + aqiPath).text()?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).componentsSeparatedByString(" ")[0],
+            aqi = Int(aqiString),
+            rating = document.peekAtSearchWithXPathQuery(basePath + ratingPath).text()?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()),
+            concentrationString = document.peekAtSearchWithXPathQuery(basePath + concentrationPath).text()?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "\r\n\t")).joinWithSeparator("") {
+                let components = concentrationString.componentsSeparatedByString(" ")
+                if components.count > 2 {
+                    let concentration = components[1]
+                    let sample = DataSample(USEmbassyQuery: self, city: city, timestamp: time, PM2_5: Double(concentration)!, AQI: aqi, rating: rating)
+                    let result = Result(USEmbassyQuery: self, sample: sample)
+                    return result
+                } else {
+                    throw USEmbassyQuery.USEmbassyQueryError.ParseDataError
+                }
+        } else {
+            throw USEmbassyQuery.USEmbassyQueryError.ParseDataError
         }
     }
 }

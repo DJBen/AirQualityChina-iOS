@@ -11,6 +11,8 @@ public typealias QueryExecutionBlock = (result: Result?, error: NSError?) -> Voi
 public protocol Query {
     var request: NSURLRequest { get }
     func executeWithCompletion(completionBlock: QueryExecutionBlock)
+    func parseResponseWithHandler(handler: QueryExecutionBlock) -> ((NSData?, NSURLResponse?, NSError?) -> Void)
+    func parseData(data: NSData) throws -> Result
 }
 
 public protocol QueryError: ErrorType {
