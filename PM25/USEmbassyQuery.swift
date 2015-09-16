@@ -22,11 +22,12 @@ public enum USEmbassyQuery: Query {
     private static let cities = ["北京", "成都", "广州", "上海", "沈阳"]
     private static let dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "MMM d, YY h a"
+        formatter.dateFormat = "MMM D, yyyy h a"
+        formatter.locale = NSLocale(localeIdentifier: "en_US")
         formatter.timeZone = NSTimeZone(name: "Asia/Shanghai")
         return formatter
     }()
-    
+
     var URL: NSURL {
         switch self {
         case .CityNames:
@@ -90,12 +91,12 @@ public enum USEmbassyQuery: Query {
         }
         let document = PM25TFHpple(HTMLData: data)
         let basePath = "//div[contains(@class, 'currentExposure')]"
-        let timestampPath = "/table/tr[1]/th/span"
+        let timestampPath = "//tr[1]/th/span"
         // AQI format: ### AQI
-        let aqiPath = "/table/tr[2]/td"
-        let ratingPath = "/table/tr[3]/td"
+        let aqiPath = "//tr[2]/td"
+        let ratingPath = "//tr[3]/td"
         // Concentration format: Concentration: ## \mu g/m^3
-        let concentrationPath = "/table/tr[5]/th/span"
+        let concentrationPath = "//tr[5]/th/span"
         if let timestamp = document.peekAtSearchWithXPathQuery(basePath + timestampPath).text()?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()),
             time = USEmbassyQuery.dateFormatter.dateFromString(timestamp),
             aqiString = document.peekAtSearchWithXPathQuery(basePath + aqiPath).text()?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).componentsSeparatedByString(" ")[0],
