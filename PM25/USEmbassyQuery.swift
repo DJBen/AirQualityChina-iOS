@@ -15,6 +15,8 @@ public enum USEmbassyQuery: Query {
         case ParseDataError
     }
     
+    private static let apiHost = "www.stateair.net"
+    
     case CityAQI(city: String)
     case CityNames
     
@@ -35,7 +37,7 @@ public enum USEmbassyQuery: Query {
         case .CityAQI(let city):
             let components = NSURLComponents()
             components.scheme = "http"
-            components.host = "www.stateair.net"
+            components.host = USEmbassyQuery.apiHost
             let pageIndex = USEmbassyQuery.cityWebpageMappings[city]
             components.path = ("/web/post/1" as NSString).stringByAppendingPathComponent("\(pageIndex!).html")
             let url = components.URL!
@@ -83,6 +85,21 @@ public enum USEmbassyQuery: Query {
             }
         }
         return handler
+    }
+    
+    public static func parseURL(URL: NSURL) -> USEmbassyQuery? {
+        guard let components = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false), pathString = components.path where components.scheme == "http" && components.host == USEmbassyQuery.apiHost else {
+            return nil
+        }
+        let path = pathString as NSString
+        guard let index = Int((path.lastPathComponent as NSString).stringByDeletingPathExtension) where path.pathExtension == "html" else {
+            return nil
+        }
+        let city = cityWebpageMappings.filter { $0.1 == index }.first?.0
+        guard city != nil else {
+            return nil
+        }
+        return USEmbassyQuery.CityAQI(city: city!)
     }
     
     public func parseData(data: NSData) throws -> Result {

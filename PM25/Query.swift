@@ -13,6 +13,7 @@ public protocol Query {
     func executeWithCompletion(completionBlock: QueryExecutionBlock)
     func parseResponseWithHandler(handler: QueryExecutionBlock) -> ((NSData?, NSURLResponse?, NSError?) -> Void)
     func parseData(data: NSData) throws -> Result
+    static func parseURL(URL: NSURL) -> Self?
 }
 
 public protocol QueryError: ErrorType {

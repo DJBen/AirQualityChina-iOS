@@ -36,4 +36,18 @@ class USEmbassyTests: XCTestCase {
         waitForExpectationsWithTimeout(5.0, handler: nil)
     }
 
+    func test_embassy_queries_can_be_converted_from_url() {
+        let url = NSURL(string: "http://www.stateair.net/web/post/1/2.html")!
+        guard let query = USEmbassyQuery.parseURL(url) else {
+            XCTFail()
+            return
+        }
+        switch query {
+        case .CityAQI(let city):
+            XCTAssertEqual(city, "成都")
+        default:
+            XCTFail()
+        }
+    }
+    
 }
