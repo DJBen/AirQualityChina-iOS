@@ -8,12 +8,12 @@
 
 /* Air quality ratings */
 
-"Great" = "Great";
-"Okay" = "Okay";
-"Lightly Polluted" = "Lightly Polluted";
-"Moderately Polluted" = "Moderately Polluted";
-"Heavily Polluted" = "Heavily Polluted";
-"Severely Polluted" = "Severely Polluted";
+"Great" = "Good";
+"Okay" = "Moderate";
+"Lightly Polluted" = "Unhealthy for Sensitive Groups";
+"Moderately Polluted" = "Unhealthy";
+"Heavily Polluted" = "Very Unhealthy";
+"Severely Polluted" = "Hazardous";
 
 "Good" = "Good";
 "Moderate" = "Moderate";
@@ -31,12 +31,11 @@
 "H" = "H";
 "!!!" = "!!!";
 
-"G" = "G";
-"OK" = "OK";
-"LP" = "LP";
-"MP" = "MP";
-"HP" = "HP";
-"SP" = "SP";
+"OK" = "M";
+"LP" = "USG";
+"MP" = "U";
+"HP" = "VU";
+"SP" = "H";
 
 /* Primary pollutants */
 
