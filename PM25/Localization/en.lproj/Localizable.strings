@@ -23,19 +23,19 @@
 "Hazardous" = "Hazardous";
 "BeyondIndex" = "BeyondIndex";
 
-"G" = "G";
-"M" = "M";
+"G" = "Good";
+"M" = "Moderate";
 "USG" = "USG";
-"U" = "U";
-"VU" = "VU";
-"H" = "H";
+"U" = "Unhealthy";
+"VU" = "Very Unhealthy";
+"H" = "Hazardous";
 "!!!" = "!!!";
 
-"OK" = "M";
+"OK" = "Moderate";
 "LP" = "USG";
-"MP" = "U";
-"HP" = "VU";
-"SP" = "H";
+"MP" = "Unhealthy";
+"HP" = "Very Unhealthy";
+"SP" = "Hazardous";
 
 /* Primary pollutants */
 
